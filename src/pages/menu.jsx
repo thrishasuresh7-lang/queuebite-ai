@@ -2,7 +2,7 @@ import MenuHeader from "../components/student/MenuHeader";
 import Searchbar from "../components/student/Searchbar";
 import CategoryFilter from "../components/student/CategoryFilter";
 import FoodGrid from "../components/student/FoodGrid";
-import AIRecommendation from "../components/Menu/AIRecommendation";
+import AIRecommendation from "../components/menu/AIRecommendation";
 
 export default function Menu() {
   return (
