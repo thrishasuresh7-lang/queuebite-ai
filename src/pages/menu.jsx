@@ -6,17 +6,29 @@ import AIRecommendation from "../components/Menu/AIRecommendation";
 
 export default function Menu() {
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
+    <div className="min-h-screen bg-slate-950 text-white pt-28 pb-16 px-6 lg:px-10">
 
-      <MenuHeader />
+      <div className="max-w-7xl mx-auto">
 
-      <Searchbar />
+        <MenuHeader />
 
-      <CategoryFilter />
+        <div className="mt-8">
+          <Searchbar />
+        </div>
 
-      <AIRecommendation />
+        <div className="mt-8">
+          <CategoryFilter />
+        </div>
 
-      <FoodGrid />
+        <div className="mt-8">
+          <AIRecommendation />
+        </div>
+
+        <div className="mt-10">
+          <FoodGrid />
+        </div>
+
+      </div>
 
     </div>
   );

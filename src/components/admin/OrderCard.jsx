@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateOrderStatus } from "../../services/orderService";
 
 export default function OrderCard({ order }) {
   const [status, setStatus] = useState(order.status);
+
+  useEffect(() => {
+    setStatus(order.status);
+  }, [order.status]);
 
   const statusStyle = {
     Preparing: "bg-yellow-500",
@@ -27,28 +31,29 @@ export default function OrderCard({ order }) {
           </p>
 
           <p className="text-gray-300 mt-2">
-  🎓 USN: {order.usn}
-</p>
+            🎓 USN: {order.usn}
+          </p>
 
-<p className="text-gray-300">
-  📞 Phone: {order.phone}
-</p>
+          <p className="text-gray-300">
+            📞 Phone: {order.phone}
+          </p>
 
-<p className="text-gray-300">
-  💳 Payment: {order.payment}
-</p>
+          <p className="text-gray-300">
+            💳 Payment: {order.payment}
+          </p>
 
-<p className="text-gray-300">
-  🕒 {order.orderTime}
-</p>
+          <p className="text-gray-300">
+            🕒 {order.orderTime}
+          </p>
 
           <div className="mt-4 space-y-2">
-  {order.items.map((item, index) => (
-    <p key={index} className="text-gray-300">
-      🍽 {item.name} × {item.quantity} — ₹{item.price * item.quantity}
-    </p>
-  ))}
-</div>
+            {order.items.map((item, index) => (
+              <p key={index} className="text-gray-300">
+                🍽 {item.name} × {item.quantity} — ₹
+                {item.price * item.quantity}
+              </p>
+            ))}
+          </div>
 
           <h3 className="mt-5 text-2xl font-bold text-green-400">
             ₹{order.total}
@@ -72,34 +77,34 @@ export default function OrderCard({ order }) {
           <div className="mt-6 space-y-3">
 
             <button
-  onClick={async () => {
-    setStatus("Preparing");
-    await updateOrderStatus(order.id, "Preparing");
-  }}
-  className="w-full bg-yellow-500 hover:bg-yellow-600 py-2 rounded-xl font-semibold transition"
->
-  Preparing
-</button>
-
-           <button
-  onClick={async () => {
-    setStatus("Ready");
-    await updateOrderStatus(order.id, "Ready");
-  }}
-  className="w-full bg-green-500 hover:bg-green-600 py-2 rounded-xl font-semibold transition"
->
-  Ready
-</button>
+              onClick={async () => {
+                setStatus("Preparing");
+                await updateOrderStatus(order.id, "Preparing");
+              }}
+              className="w-full bg-yellow-500 hover:bg-yellow-600 py-2 rounded-xl font-semibold transition"
+            >
+              Preparing
+            </button>
 
             <button
-  onClick={async () => {
-    setStatus("Collected");
-    await updateOrderStatus(order.id, "Collected");
-  }}
-  className="w-full bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold transition"
->
-  Collected
-</button>
+              onClick={async () => {
+                setStatus("Ready");
+                await updateOrderStatus(order.id, "Ready");
+              }}
+              className="w-full bg-green-500 hover:bg-green-600 py-2 rounded-xl font-semibold transition"
+            >
+              Ready
+            </button>
+
+            <button
+              onClick={async () => {
+                setStatus("Collected");
+                await updateOrderStatus(order.id, "Collected");
+              }}
+              className="w-full bg-gray-600 hover:bg-gray-700 py-2 rounded-xl font-semibold transition"
+            >
+              Collected
+            </button>
 
           </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -11,8 +12,7 @@ export default function AdminLogin() {
     if (username === "admin" && password === "queuebite123") {
     localStorage.setItem("adminLoggedIn", "true");
     navigate("/admin-dashboard");
-}else {
-      alert("❌ Invalid Username or Password");
+}else {toast.error("Invalid Username or Password");
     }
   };
 

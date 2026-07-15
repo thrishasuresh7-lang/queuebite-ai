@@ -1,80 +1,145 @@
+import toast from "react-hot-toast";
+import { useState } from "react";
 import { useCart } from "../../context/CartContext";
-import { Heart, Star, Clock3 } from "lucide-react";
+import {
+  Heart,
+  Star,
+  Clock3,
+  ShoppingCart,
+} from "lucide-react";
 
 export default function FoodCard({ food }) {
   const { addToCart } = useCart();
+  const [liked, setLiked] = useState(false);
 
   return (
-    <div className="group relative bg-slate-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-orange-500/40 hover:-translate-y-2 transition-all duration-300">
+    <div className="group relative bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-xl hover:border-orange-500 hover:shadow-orange-500/20 hover:-translate-y-2 transition-all duration-300">
 
       {/* Trending Badge */}
+
       {food.trending && (
-        <div className="absolute top-3 left-3 z-20 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+        <div className="absolute top-4 left-4 z-20 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+
           🔥 Trending
+
         </div>
       )}
 
-      {/* Favourite Button */}
-      <button className="absolute top-3 right-3 z-20 bg-white/90 p-2 rounded-full hover:bg-red-500 hover:text-white transition">
-        <Heart size={18} />
+      {/* Favourite */}
+
+      <button
+        onClick={() => setLiked(!liked)}
+        className="absolute top-4 right-4 z-20 bg-white/90 p-2 rounded-full transition hover:scale-110"
+      >
+        <Heart
+          size={18}
+          className={
+            liked
+              ? "fill-red-500 text-red-500"
+              : "text-slate-700"
+          }
+        />
       </button>
 
-      {/* Food Image */}
+      {/* Image */}
+
       <div className="overflow-hidden">
+
         <img
           src={food.image}
           alt={food.name}
-          className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-56 object-cover group-hover:scale-110 transition duration-500"
         />
+
       </div>
 
-      {/* Card Body */}
-      <div className="p-5">
-        <h2 className="text-2xl font-bold text-white">
-          {food.name}
-        </h2>
+      {/* Content */}
 
-        <div className="flex justify-between items-center mt-3 text-gray-300">
-          <div className="flex items-center gap-1">
-            <Star size={18} className="text-yellow-400 fill-yellow-400" />
-            <span className="font-semibold">{food.rating}</span>
+      <div className="p-6">
+
+        <div className="flex justify-between items-start">
+
+          <h2 className="text-2xl font-bold">
+
+            {food.name}
+
+          </h2>
+
+          <span
+            className={`text-xs px-3 py-1 rounded-full font-bold ${
+              food.veg
+                ? "bg-green-600"
+                : "bg-red-600"
+            }`}
+          >
+            {food.veg ? "VEG" : "NON VEG"}
+          </span>
+
+        </div>
+
+        {/* Rating */}
+
+        <div className="flex justify-between items-center mt-5">
+
+          <div className="flex items-center gap-2">
+
+            <Star
+              className="fill-yellow-400 text-yellow-400"
+              size={18}
+            />
+
+            {food.rating}
+
           </div>
 
-          <div className="flex items-center gap-1">
-            <Clock3 size={18} className="text-cyan-400" />
-            <span>{food.prepTime}</span>
+          <div className="flex items-center gap-2 text-gray-400">
+
+            <Clock3 size={18} />
+
+            {food.prepTime}
+
           </div>
+
         </div>
 
-        <div className="mt-4">
-          {food.veg ? (
-            <span className="inline-flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-              🟢 Veg
-            </span>
-          ) : (
-            <span className="inline-flex items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-              🔴 Non Veg
-            </span>
-          )}
+        {/* Price */}
+
+        <div className="flex justify-between items-center mt-7">
+
+          <div>
+
+            <p className="text-gray-400 text-sm">
+
+              Price
+
+            </p>
+
+            <h3 className="text-3xl font-black text-orange-400">
+
+              ₹{food.price}
+
+            </h3>
+
+          </div>
+
+          <button
+           onClick={() => {
+  addToCart(food);
+  toast.success(`${food.name} added to cart!`);
+}}
+            className="bg-orange-500 hover:bg-orange-600 active:scale-95 px-5 py-3 rounded-2xl font-bold flex items-center gap-2 transition"
+          >
+
+            <ShoppingCart size={18} />
+
+            Add
+
+          </button>
+
         </div>
 
-        <div className="mt-6">
-  <h3 className="text-3xl font-bold text-orange-400 mb-4">
-    ₹{food.price}
-  </h3>
-
-  <button
-  onClick={() => {
-    addToCart(food);
-    alert(`${food.name} added to cart!`);
-  }}
-  className="bg-orange-500 hover:bg-orange-600 active:scale-95 transition px-6 py-2 rounded-xl font-semibold shadow-lg"
->
-  Add to Cart
-</button>
-</div>
-        </div>
       </div>
-    
+
+    </div>
   );
 }

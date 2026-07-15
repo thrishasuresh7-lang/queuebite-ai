@@ -14,28 +14,48 @@ export default function StudentDashboard() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-slate-900 text-white p-8">
+      <div className="min-h-screen bg-slate-950 text-white pt-28 pb-16 px-6 lg:px-10">
 
-        <Greeting />
+        <div className="max-w-7xl mx-auto">
 
-        <AISuggestion />
+          <Greeting />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <QueueCard />
-          <WalletCard />
+          <div className="mt-8">
+            <AISuggestion />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+
+            <QueueCard />
+
+            <WalletCard />
+
+          </div>
+
+          <div className="mt-8">
+            <SpecialCard />
+          </div>
+
+          <div className="mt-8">
+            <TrendingFoods />
+          </div>
+
+          <div className="mt-8">
+            <QuickActions />
+          </div>
+
+          <div className="mt-8">
+            <QueuePrediction />
+          </div>
+
+          <div className="mt-10">
+            <MenuGrid />
+          </div>
+
         </div>
 
-        <SpecialCard />
-
-        <TrendingFoods />
-
-        <QuickActions />
-
-        <QueuePrediction />
-
-        <MenuGrid />
-
       </div>
+
     </>
   );
 }

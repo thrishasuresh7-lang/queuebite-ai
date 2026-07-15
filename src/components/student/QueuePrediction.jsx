@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import { listenToOrders } from "../../services/orderService";
+import {
+  Brain,
+  Users,
+  Clock3,
+  CalendarClock,
+  Sparkles,
+} from "lucide-react";
 
 export default function QueuePrediction() {
   const [orders, setOrders] = useState([]);
@@ -25,41 +32,127 @@ export default function QueuePrediction() {
     minute: "2-digit",
   });
 
+  const queueStatus =
+    activeOrders < 5
+      ? "Low"
+      : activeOrders < 10
+      ? "Moderate"
+      : "High";
+
   return (
-    <div className="bg-slate-800 rounded-2xl p-6 mt-8">
+    <section className="mt-10">
 
-      <h2 className="text-3xl font-bold text-orange-500">
-        🤖 QueueBite AI
-      </h2>
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-700 via-blue-700 to-cyan-700 p-8 shadow-2xl">
 
-      <div className="grid md:grid-cols-3 gap-6 mt-6">
+        {/* Background Glow */}
 
-        <div className="bg-slate-700 rounded-xl p-5">
-          <p className="text-gray-400">Current Queue</p>
+        <div className="absolute -right-10 -top-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
 
-          <h2 className="text-4xl font-bold text-orange-400 mt-3">
-            {activeOrders}
-          </h2>
-        </div>
+        <div className="relative">
 
-        <div className="bg-slate-700 rounded-xl p-5">
-          <p className="text-gray-400">Estimated Wait</p>
+          <div className="flex flex-col lg:flex-row justify-between gap-8">
 
-          <h2 className="text-4xl font-bold text-cyan-400 mt-3">
-            {waitingTime} mins
-          </h2>
-        </div>
+            {/* Left */}
 
-        <div className="bg-slate-700 rounded-xl p-5">
-          <p className="text-gray-400">Best Pickup Time</p>
+            <div>
 
-          <h2 className="text-2xl font-bold text-green-400 mt-3">
-            {recommendedTime}
-          </h2>
+              <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">
+
+                <Brain size={18} />
+
+                QueueBite AI Prediction
+
+              </div>
+
+              <h2 className="text-5xl font-black text-white mt-6">
+                Smart Queue Analysis
+              </h2>
+
+              <p className="text-blue-100 mt-5 max-w-2xl text-lg leading-8">
+                AI continuously analyses live orders and predicts
+                the best time for food pickup to reduce waiting.
+              </p>
+
+            </div>
+
+            {/* Right */}
+
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 min-w-[260px]">
+
+              <h3 className="font-bold text-xl flex items-center gap-2">
+
+                <Sparkles size={22} />
+
+                AI Recommendation
+
+              </h3>
+
+              <p className="mt-5 text-green-300 font-bold text-lg">
+
+                {queueStatus === "Low"
+                  ? "✅ Great time to order!"
+                  : queueStatus === "Moderate"
+                  ? "⚠ Order soon."
+                  : "⛔ Wait a few minutes."}
+
+              </p>
+
+            </div>
+
+          </div>
+
+          {/* Cards */}
+
+          <div className="grid md:grid-cols-3 gap-6 mt-10">
+
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6">
+
+              <Users className="text-orange-300 mb-4" />
+
+              <p className="text-blue-100">
+                Current Queue
+              </p>
+
+              <h2 className="text-5xl font-black mt-3">
+                {activeOrders}
+              </h2>
+
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6">
+
+              <Clock3 className="text-yellow-300 mb-4" />
+
+              <p className="text-blue-100">
+                Estimated Wait
+              </p>
+
+              <h2 className="text-5xl font-black mt-3">
+                {waitingTime} min
+              </h2>
+
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6">
+
+              <CalendarClock className="text-green-300 mb-4" />
+
+              <p className="text-blue-100">
+                Best Pickup
+              </p>
+
+              <h2 className="text-3xl font-black mt-4">
+                {recommendedTime}
+              </h2>
+
+            </div>
+
+          </div>
+
         </div>
 
       </div>
 
-    </div>
+    </section>
   );
 }

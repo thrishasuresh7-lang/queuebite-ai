@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../components/Admin/OrderCard";
@@ -44,117 +43,194 @@ export default function AdminDashboard() {
     return matchesSearch && matchesFilter;
   });
 
+  const revenue = filteredOrders.reduce(
+    (sum, order) => sum + order.total,
+    0
+  );
+
+  const queueCount = filteredOrders.filter(
+    (order) => order.status !== "Collected"
+  ).length;
+
+  const completedOrders = filteredOrders.filter(
+    (order) => order.status === "Collected"
+  ).length;
+
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
+    <div className="min-h-screen bg-slate-950 text-white pt-28 pb-16 px-6 lg:px-10">
 
-      {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="max-w-7xl mx-auto">
 
-        <div>
-          <h1 className="text-5xl font-bold text-orange-500">
-            👨‍🍳 QueueBite AI Admin
-          </h1>
+        {/* Hero */}
 
-          <p className="text-gray-400 mt-2">
-            Welcome, Admin 👋
-          </p>
+        <div className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 rounded-3xl p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-center gap-8">
 
-          <p className="text-gray-500">{today}</p>
-        </div>
+          <div>
 
-        <button
-          onClick={logout}
-          className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-xl font-semibold"
-        >
-          Logout
-        </button>
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
+              🤖 QueueBite AI
+            </div>
 
-      </div>
+            <h1 className="text-5xl font-black mt-6">
+              Admin Dashboard
+            </h1>
 
-      {/* Dashboard Cards */}
-      <div className="grid md:grid-cols-3 gap-6 mt-10">
+            <p className="mt-4 text-lg">
+              Manage orders, monitor revenue and track your canteen in real time.
+            </p>
 
-        <div className="bg-slate-800 rounded-2xl p-6">
-          <p className="text-gray-400">Today's Orders</p>
+            <p className="mt-2 text-white/80">
+              {today}
+            </p>
 
-          <h2 className="text-5xl font-bold text-orange-400 mt-3">
-            {filteredOrders.length}
-          </h2>
-        </div>
+          </div>
 
-        <div className="bg-slate-800 rounded-2xl p-6">
-          <p className="text-gray-400">Revenue</p>
-
-          <h2 className="text-5xl font-bold text-green-400 mt-3">
-            ₹{filteredOrders.reduce((sum, order) => sum + order.total, 0)}
-          </h2>
-        </div>
-
-        <div className="bg-slate-800 rounded-2xl p-6">
-          <p className="text-gray-400">Orders in Queue</p>
-
-          <h2 className="text-5xl font-bold text-cyan-400 mt-3">
-            {
-              filteredOrders.filter(
-                (order) => order.status !== "Collected"
-              ).length
-            }
-          </h2>
-        </div>
-
-      </div>
-
-      {/* Search */}
-      <div className="mt-10">
-
-        <input
-          type="text"
-          placeholder="🔍 Search by Token or Student Name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-4 rounded-xl bg-slate-800 outline-none"
-        />
-
-      </div>
-
-      {/* Filter Buttons */}
-      <div className="flex gap-4 mt-6 flex-wrap">
-
-        {["All", "Preparing", "Ready", "Collected"].map((status) => (
           <button
-            key={status}
-            onClick={() => setFilter(status)}
-            className={`px-5 py-2 rounded-xl font-semibold transition ${
-              filter === status
-                ? "bg-orange-500"
-                : "bg-slate-700 hover:bg-slate-600"
-            }`}
+            onClick={logout}
+            className="bg-red-500 hover:bg-red-600 px-8 py-4 rounded-2xl font-bold transition"
           >
-            {status}
+            Logout
           </button>
-        ))}
+
+        </div>
+
+        {/* Dashboard Cards */}
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
+
+          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-orange-500 transition">
+
+            <p className="text-gray-400">
+              Today's Orders
+            </p>
+
+            <h2 className="text-6xl font-black text-orange-400 mt-3">
+              {filteredOrders.length}
+            </h2>
+
+          </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-orange-500 transition">
+
+            <p className="text-gray-400">
+              Revenue
+            </p>
+
+            <h2 className="text-6xl font-black text-green-400 mt-3">
+              ₹{revenue}
+            </h2>
+
+          </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-orange-500 transition">
+
+            <p className="text-gray-400">
+              Orders in Queue
+            </p>
+
+            <h2 className="text-6xl font-black text-cyan-400 mt-3">
+              {queueCount}
+            </h2>
+
+          </div>
+
+          <div className="bg-slate-900 border border-slate-700 rounded-3xl p-8 hover:border-orange-500 transition">
+
+            <p className="text-gray-400">
+              Completed Orders
+            </p>
+
+            <h2 className="text-6xl font-black text-purple-400 mt-3">
+              {completedOrders}
+            </h2>
+
+          </div>
+
+        </div>
+
+        {/* Search */}
+
+        <div className="mt-10">
+
+          <input
+            type="text"
+            placeholder="🔍 Search by Token or Student Name"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full bg-slate-900 border border-slate-700 rounded-2xl p-5 text-lg outline-none focus:border-orange-500"
+          />
+
+        </div>
+
+        {/* Filters */}
+
+        <div className="flex gap-4 flex-wrap mt-8">
+
+          {["All", "Preparing", "Ready", "Collected"].map((status) => (
+
+            <button
+              key={status}
+              onClick={() => setFilter(status)}
+              className={`px-6 py-3 rounded-2xl font-bold transition ${
+                filter === status
+                  ? "bg-orange-500"
+                  : "bg-slate-800 hover:bg-slate-700"
+              }`}
+            >
+              {status}
+            </button>
+
+          ))}
+
+        </div>
+
+        {/* Analytics */}
+
+        <div className="mt-10">
+          <Analytics orders={orders} />
+        </div>
+
+        <div className="mt-10">
+          <AIInsights orders={orders} />
+        </div>
+
+        <h2 className="text-4xl font-black mt-14 mb-8">
+          📦 Live Orders
+        </h2>
+                {/* Orders */}
+
+        <div className="space-y-8">
+
+          {filteredOrders.length === 0 ? (
+
+            <div className="bg-slate-900 border border-slate-700 rounded-3xl py-20 text-center">
+
+              <h2 className="text-3xl font-bold text-gray-400">
+                📭 No Orders Found
+              </h2>
+
+              <p className="text-gray-500 mt-4">
+                New orders will appear here automatically.
+              </p>
+
+            </div>
+
+          ) : (
+
+            filteredOrders.map((order) => (
+
+              <OrderCard
+                key={order.id}
+                order={order}
+              />
+
+            ))
+
+          )}
+
+        </div>
 
       </div>
-
-      {/* Orders */}
-      <div className="mt-10 space-y-6">
-
-        {filteredOrders.length === 0 ? (
-          <h2 className="text-center text-2xl text-gray-400">
-            No Orders Found
-          </h2>
-        ) : (
-          filteredOrders.map((order) => (
-            <OrderCard
-              key={order.id}
-              order={order}
-            />
-          ))
-        )}
-
-      </div>
-      <Analytics orders={orders} /> 
-      <AIInsights orders={orders} />
 
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function StudentLogin() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function StudentLogin() {
     if (studentId && password) {
       navigate("/student-dashboard");
     } else {
-      alert("Please enter Student ID and Password");
+      toast.error("Please enter Student ID and Password.");
     }
   };
 
