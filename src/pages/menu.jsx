@@ -1,7 +1,7 @@
-import MenuHeader from "../components/Student/MenuHeader";
-import Searchbar from "../components/Student/Searchbar";
-import CategoryFilter from "../components/Student/CategoryFilter";
-import FoodGrid from "../components/Student/FoodGrid";
+import MenuHeader from "../components/student/MenuHeader";
+import Searchbar from "../components/student/Searchbar";
+import CategoryFilter from "../components/student/CategoryFilter";
+import FoodGrid from "../components/student/FoodGrid";
 import AIRecommendation from "../components/Menu/AIRecommendation";
 
 export default function Menu() {

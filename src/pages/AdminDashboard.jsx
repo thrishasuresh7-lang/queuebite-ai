@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import OrderCard from "../components/Admin/OrderCard";
 import { listenToOrders } from "../services/orderService";
-import Analytics from "../components/Admin/Analytics";
-import AIInsights from "../components/Admin/AIInsights";
+import OrderCard from "../components/admin/OrderCard";
+import Analytics from "../components/admin/Analytics";
+import AIInsights from "../components/admin/AIInsights";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();

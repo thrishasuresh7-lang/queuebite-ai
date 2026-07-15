@@ -7,7 +7,7 @@ import QuickActions from "../components/student/QuickActions";
 import WalletCard from "../components/student/WalletCard";
 import SpecialCard from "../components/student/SpecialCard";
 import MenuGrid from "../components/student/MenuGrid";
-import QueuePrediction from "../components/Student/QueuePrediction";
+import QueuePrediction from "../components/student/QueuePrediction";
 
 export default function StudentDashboard() {
   return (
